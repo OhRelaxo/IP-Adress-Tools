@@ -3,7 +3,7 @@ def calculate_octet(host_bits):
     octet_list = []
     end_host = host_range - 2
     broadcast = host_range - 1
-    for i in range(0, int(256 / host_range)):
+    for i in range(0, int(256 / host_range)): # 256^octet die ich benötige -> /24 -> 2 ...
         network = i * host_range
         current_subnet = {"network" : network, "start_host": 1 + network,
                           "end_host": end_host + network, "broadcast": broadcast + network}

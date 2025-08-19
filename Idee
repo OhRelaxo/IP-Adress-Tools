@@ -11,6 +11,7 @@ C: 192.168.0.0 - 192.168.255.255
 Die Restlichen sind Öffentlich.
 
 
+IP: 192.168.0.53/28 -> 0011|0101 Netzwerk Adresse: 0011|0000
 
 Subnet berechnen:
 Eingabe: eine IP-Adresse mit subnetz z.B. 192.168.0.1/28
@@ -36,3 +37,40 @@ Subnet	          Mask	     Inverse Mask Subnet Size	Host Range	                 
 192.168.0.208	255.255.255.240	  0.0.0.15	  14	  192.168.0.209  to  192.168.0.222	             192.168.0.223
 192.168.0.224	255.255.255.240	  0.0.0.15	  14	  192.168.0.225  to  192.168.0.238	             192.168.0.239
 192.168.0.240	255.255.255.240	  0.0.0.15	  14	  192.168.0.241  to  192.168.0.254	             192.168.0.255
+
+Beispiel Code für tabulate:
+
+from tabulate import tabulate
+
+subnet_data = [
+    {
+        'subnet': '192.168.0.0',
+        'mask': '255.255.255.240',
+        'inverse_mask': '0.0.0.15',
+        'size': 14,
+        'host_range': '192.168.0.1 to 192.168.0.14',
+        'broadcast': '192.168.0.15'
+    },
+    {
+        'subnet': '192.168.0.16',
+        'mask': '255.255.255.240',
+        'inverse_mask': '0.0.0.15',
+        'size': 14,
+        'host_range': '192.168.0.17 to 192.168.0.30',
+        'broadcast': '192.168.0.31'
+    }
+]
+
+headers = ['Subnet', 'Mask', 'Inverse Mask', 'Size', 'Host Range', 'Broadcast']
+
+rows = [[
+    entry['subnet'],
+    entry['mask'],
+    entry['inverse_mask'],
+    entry['size'],
+    entry['host_range'],
+    entry['broadcast']
+] for entry in subnet_data]
+
+print(tabulate(rows, headers=headers, tablefmt='grid'))
+
