@@ -10,9 +10,13 @@ def calculate_octet(host_bits):
         octet_list.append(current_subnet)
     return octet_list
 
-def ip_class(first_octet):
-    if 0 <= first_octet <= 127:
+def ip_class(first_octet, second_octet):
+    if 0 <= first_octet <= 126:
         return "A"
+    elif first_octet == 127:
+        return "Loopback"
+    elif first_octet == 169 and second_octet == 254:
+        return "Link-local (APIPA)"
     elif 128 <= first_octet <=  191:
         return "B"
     elif 192 <= first_octet <= 223:
