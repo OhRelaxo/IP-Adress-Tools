@@ -16,7 +16,7 @@ if host_bits == 0:
     raise ValueError("the subnet mask has to be bigger than 0!")
 if 1 <= host_bits <= 8:
     print(calculate_octet(host_bits))
-    print(ip_class(first_octet))
+    print(ip_class(first_octet, second_octet))
     print(ip_pub_or_pri(first_octet, second_octet))
 
     # Nur das Vierte Octet muss berechnet werden!
