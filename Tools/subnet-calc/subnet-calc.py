@@ -18,7 +18,7 @@ if 1 <= host_bits <= 8:
     print(calculate_octet(host_bits))
     print(ip_class(first_octet, second_octet))
     print(ip_pub_or_pri(first_octet, second_octet))
-
+    # den String in einer eigenen Funktion bauen, vielleicht hier einen "master string" und diesen dann in die Funktion hereingeben!
     # Nur das Vierte Octet muss berechnet werden!
     pass
 elif 8 < host_bits <= 16:
