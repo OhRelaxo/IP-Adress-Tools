@@ -1,12 +1,6 @@
-def calculate_32_bit_ip(ip:str) -> int:
-    ip_list = list(map(int, ip.split(".")))
-    ip_in_bit = 0
-    shift = 24
-    for octet in ip_list:
-        ip_in_bit += octet << shift
-        shift -= 8
-    print(bin(ip_in_bit))
-    return ip_in_bit
+def ip_to_32bit(ip: str) -> int:
+    octets = list(map(int, ip.split(".")))
+    return sum(octet << (8 * (3 - i)) for i, octet in enumerate(octets))
 
 def ip_class(first_octet: int, second_octet: int) -> str:
     if 0 <= first_octet <= 126:
@@ -39,34 +33,47 @@ def ip_pub_or_pri(first_octet: int, second_octet: int) -> str:
 def fancy_string(bit32_component: int) -> str:
     return f"{bit32_component >> 24 & 0xFF}.{bit32_component >> 16 & 0xFF}.{bit32_component >> 8 & 0xFF}.{bit32_component >> 0 & 0xFF}"
 
-def build_subnet(ip: str, prefix: int, first_octet: int, second_octet: int):
-    ip_in_bit = calculate_32_bit_ip(ip)
-    subnet_mask = (0xFFFFFFFF << (32 - prefix) & 0xFFFFFFFF)
-    network_adr = ip_in_bit & subnet_mask
-    inverse_mask = subnet_mask ^ 0xFFFFFFFF
-    broadcast = ip_in_bit | inverse_mask
+def subnet_count(ip_cl: str, new_prefix: int) -> int:
+    default_prefix = {"A": 8, "B": 16, "C": 24}.get(ip_cl, 0)
+    return 2 ** (new_prefix - default_prefix) if new_prefix > default_prefix else 1
+
+def calc_hosts(prefix: int) -> int:
+    if prefix >= 31:
+        return 0
+    return 2 ** (32 - prefix) - 2
+
+def generate_subnets(ip: str, prefix: int, first_octet: int, second_octet: int):
+    subnet_data = []
     ip_cl = ip_class(first_octet, second_octet)
     ip_type = ip_pub_or_pri(first_octet, second_octet)
-    if prefix > 31:
-        hosts = 0 # kann kein subnetz mit einem Prefix berechnen welcher größer als 31 ist :(
-    else: hosts = 2 ** (32 - prefix) - 2
-    if hosts >= 1:
-        first_host = fancy_string(network_adr + 1)
-        last_host = fancy_string(network_adr + hosts)
-    else:
-        first_host = "-"
-        last_host = "-"
+    hosts = calc_hosts(prefix)
+    ip_as_int = ip_to_32bit(ip)
+    count = subnet_count(ip_cl, prefix)
+    while count != 0:
+        subnet_mask = (0xFFFFFFFF << (32 - prefix) & 0xFFFFFFFF)
+        network_adr = ip_as_int & subnet_mask
+        inverse_mask = subnet_mask ^ 0xFFFFFFFF
+        broadcast = ip_as_int | inverse_mask
+        if hosts >= 1:
+            first_host = fancy_string(network_adr + 1)
+            last_host = fancy_string(network_adr + hosts)
+        else:
+            first_host = "-"
+            last_host = "-"
 
-    subnet = {
-        "ip-class": ip_cl,
-        "ip-type": ip_type,
-        "network-address": fancy_string(network_adr),
-        "subnet mask": fancy_string(subnet_mask),
-        "inverse mask": fancy_string(inverse_mask),
-        "broadcast-address": fancy_string(broadcast),
-        "sum subnets": 2 ** prefix,
-        "sum hosts": hosts,
-        "first host": first_host,
-        "last host": last_host
-    }
-    return subnet
+        subnet = {
+            "ip-class": ip_cl,
+            "ip-type": ip_type,
+            "network-address": fancy_string(network_adr),
+            "subnet mask": fancy_string(subnet_mask),
+            "inverse mask": fancy_string(inverse_mask),
+            "broadcast-address": fancy_string(broadcast),
+            "sum subnets": 2 ** prefix,
+            "sum hosts": hosts,
+            "first host": first_host,
+            "last host": last_host
+        }
+        subnet_data.append(subnet)
+        ip_as_int = broadcast + 1
+        count -= 1
+    return subnet_data
