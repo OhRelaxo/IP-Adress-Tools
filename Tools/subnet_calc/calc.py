@@ -1,8 +1,8 @@
 import sys
-
 from Tools.subnet_calc.helper_func import generate_subnets
 from tabulate import tabulate
 import csv
+import json
 
 def subnet_calculator(ip:str, prefix:int):
     ip_list = ip.split(".")
@@ -46,6 +46,15 @@ def create_csv(subnet_list):
             writer.writerows(subnet_list)
     except Exception as e:
         print(f"failed to create the csv, error: {e}")
+        sys.exit(1)
+
+def create_json(subnet_list):
+    try:
+        with open("subnet.json", mode="w", encoding="utf-8") as jsonfile:
+            json.dump(subnet_list, jsonfile, ensure_ascii=False, indent=4)
+    except Exception as e:
+        print(f"failed to create the json file, error: {e}")
+        sys.exit(1)
 
 
 def exec_subcalc(args):
@@ -61,7 +70,7 @@ def exec_subcalc(args):
         if args.export == "csv":
             create_csv(subnet_list)# nur die csv erstellen
         if args.export == "json":
-            print("not implemented jet, sorry")
+            create_json(subnet_list)
         if args.verbose:
             print(create_table(subnet_list))
     else:
