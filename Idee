@@ -2,15 +2,13 @@ Idee:
 Ein cli-tool welches: subnet ausrechnen, ipv4 in ipv6 umwandeln, ipv6 verkürzen und verlängern
 Optional mit tkinter eine GUI machen oder eine website mit html, csv export?
 
+NO CIDR!!!!!!
+
 Todo:
 mit uv kompatibel machen
 
 subnet ausrechnen:
-Die Sum Subnets is absulut falsch! und count bzw. die funktion funktioniert auch nicht richtig,
-ich brauche irgend ein weg um die subnets richtig zu berechnen :(
 besseres error handling in subnet_calc
-💥 Problem: IP-Klassen wie D und E sind nicht für Subnetting gedacht.
-Daher ist es gut, in deinem Code diese IPs auszuschließen oder mit Warnungen zu versehen.
 
 ipv4 in ipv6 umwandlung schreiben
 

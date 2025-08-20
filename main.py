@@ -14,7 +14,6 @@ def main():
                                                                   "currently only subcalc is supported")
     parser.add_argument("--verbose", action="store_true", help="will also output the subcalc table in the commandline, "
                                                               "can only be used with the --export flag!")
-    #parser.add_argument("--cidr", action="store_true", help="toggles between classful subnetting and cidr")
     args = parser.parse_args()
 
 
