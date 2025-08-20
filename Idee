@@ -2,41 +2,14 @@ Idee:
 Ein cli-tool welches: subnet ausrechnen, ipv4 in ipv6 umwandeln, ipv6 verkürzen und verlängern
 Optional mit tkinter eine GUI machen oder eine website mit html, csv export?
 
+mit uv kompatibel machen
 
-private IP-Adressen:
-A: 10.0.0.0 - 10.255.255.255
-B: 172.16.0.0 - 172.31.255.255
-C: 192.168.0.0 - 192.168.255.255
+subnet ausrechnen: logik soweit fertig, ausgabe mit tabulate fehlt noch und die generelle Eingabe fehlt auch noch.
 
-Die Restlichen sind Öffentlich.
+💥 Problem: IP-Klassen wie D und E sind nicht für Subnetting gedacht.
+Daher ist es gut, in deinem Code diese IPs auszuschließen oder mit Warnungen zu versehen.
 
-
-IP: 192.168.0.53/28 -> 0011|0101 Netzwerk Adresse: 0011|0000
-
-Subnet berechnen:
-Eingabe: eine IP-Adresse mit subnetz z.B. 192.168.0.1/28
-
-Ausgabe:
-Typ Öffentlich oder privat; Klasse der IP-Adresse (a,b,c,d,e); Netzwerk-Adresse; Broadcast-Adresse;  Nächstes Subnet; wie viele Hosts passen in den Adress Bereich; Host range; wie viele Subnetze können erstellt werden
-privat; C; 192.168.0.0; 192.168.0.15; 192.168.0.16; 2^4 = 16 - 2 = 14; 192.168.0.1 - 192.168.0.14; 2^4 = 16
-
-Subnet	          Mask	     Inverse Mask Subnet Size	Host Range	                                 Broadcast
-192.168.0.0	  255.255.255.240	  0.0.0.15	  14	  192.168.0.1  to  192.168.0.14	                 192.168.0.15
-192.168.0.16	255.255.255.240	  0.0.0.15	  14	  192.168.0.17  to  192.168.0.30	               192.168.0.31
-192.168.0.32	255.255.255.240	  0.0.0.15	  14	  192.168.0.33  to  192.168.0.46	               192.168.0.47
-192.168.0.48	255.255.255.240	  0.0.0.15	  14	  192.168.0.49  to  192.168.0.62	               192.168.0.63
-192.168.0.64	255.255.255.240	  0.0.0.15	  14	  192.168.0.65  to  192.168.0.78	               192.168.0.79
-192.168.0.80	255.255.255.240	  0.0.0.15	  14	  192.168.0.81  to  192.168.0.94	               192.168.0.95
-192.168.0.96	255.255.255.240	  0.0.0.15	  14	  192.168.0.97  to  192.168.0.110	               192.168.0.111
-192.168.0.112	255.255.255.240	  0.0.0.15	  14	  192.168.0.113  to  192.168.0.126	             192.168.0.127
-192.168.0.128	255.255.255.240	  0.0.0.15	  14	  192.168.0.129  to  192.168.0.142	             192.168.0.143
-192.168.0.144	255.255.255.240	  0.0.0.15	  14	  192.168.0.145  to  192.168.0.158	             192.168.0.159
-192.168.0.160	255.255.255.240	  0.0.0.15	  14	  192.168.0.161  to  192.168.0.174	             192.168.0.175
-192.168.0.176	255.255.255.240	  0.0.0.15	  14	  192.168.0.177  to  192.168.0.190	             192.168.0.191
-192.168.0.192	255.255.255.240	  0.0.0.15	  14	  192.168.0.193  to  192.168.0.206	             192.168.0.207
-192.168.0.208	255.255.255.240	  0.0.0.15	  14	  192.168.0.209  to  192.168.0.222	             192.168.0.223
-192.168.0.224	255.255.255.240	  0.0.0.15	  14	  192.168.0.225  to  192.168.0.238	             192.168.0.239
-192.168.0.240	255.255.255.240	  0.0.0.15	  14	  192.168.0.241  to  192.168.0.254	             192.168.0.255
+argparse für die Ein-und ausgabe? verwenden?
 
 Beispiel Code für tabulate:
 
