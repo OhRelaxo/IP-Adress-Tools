@@ -14,8 +14,10 @@ def ip_class(first_octet: int, second_octet: int) -> str:
     elif 192 <= first_octet <= 223:
         return "C"
     elif 224 <= first_octet <= 239:
+        print("you should not use class D or E for subnetting!")
         return "D"
     elif 240 <= first_octet <= 255:
+        print("you should not use class D or E for subnetting!")
         return "E"
     else:
         raise ValueError("the first octet is bigger than 255 :(")
@@ -35,7 +37,13 @@ def fancy_string(bit32_component: int) -> str:
 
 def subnet_count(ip_cl: str, new_prefix: int) -> int:
     default_prefix = {"A": 8, "B": 16, "C": 24}.get(ip_cl, 0)
-    return 2 ** (new_prefix - default_prefix) if new_prefix > default_prefix else 1
+    if new_prefix < default_prefix:
+        pass
+    # use the next smalest default prefix than do 2 ** (new_prefix - default_prefix) -> how do I get the next smallest prefix?
+    # maybe just use numbers as the prefix indecator and than just convert them into letters? or return both letters and numbers?
+    # or get the index based of off the key and then use the next smallest, tho it wont work on A,
+    # I guess I gatta figure something out for that.
+    return 2 ** (new_prefix - default_prefix) if new_prefix != default_prefix else 1
 
 def calc_hosts(prefix: int) -> int:
     if prefix >= 31:
@@ -49,6 +57,8 @@ def generate_subnets(ip: str, prefix: int, first_octet: int, second_octet: int):
     hosts = calc_hosts(prefix)
     ip_as_int = ip_to_32bit(ip)
     count = subnet_count(ip_cl, prefix)
+    print(count)
+    count = 128
     while count != 0:
         subnet_mask = (0xFFFFFFFF << (32 - prefix) & 0xFFFFFFFF)
         network_adr = ip_as_int & subnet_mask

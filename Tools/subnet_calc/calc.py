@@ -61,7 +61,6 @@ def exec_subcalc(args):
     if args.verbose and not args.export:
         print("error: --verbose can only be used with --export! for help see -h or --help")
         sys.exit(1) # oder return?
-
     ip, prefix = create_ip_and_prefix(args)
     subnet_list = subnet_calculator(ip, prefix)
 
