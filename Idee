@@ -4,6 +4,8 @@ Optional mit tkinter eine GUI machen oder eine website mit html, csv export?
 
 mit uv kompatibel machen
 
+json export hinzufügen, besseres error handling!
+
 subnet ausrechnen: logik soweit fertig, die generelle Eingabe fehlt noch.
 
 💥 Problem: IP-Klassen wie D und E sind nicht für Subnetting gedacht.
