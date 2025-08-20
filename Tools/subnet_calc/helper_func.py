@@ -1,9 +1,12 @@
 def ip_to_32bit(ip: str) -> int:
     octets = list(map(int, ip.split(".")))
+    # basic validation (optional but safe)
+    if len(octets) != 4 or any(o < 0 or o > 255 for o in octets):
+        raise ValueError("invalid IPv4 address")
     return sum(octet << (8 * (3 - i)) for i, octet in enumerate(octets))
 
 def ip_class(first_octet: int, second_octet: int) -> str:
-    if 0 <= first_octet <= 126:
+    if 0 < first_octet <= 126:
         return "A"
     elif first_octet == 127:
         return "Loopback"
@@ -36,37 +39,38 @@ def fancy_string(bit32_component: int) -> str:
     return f"{bit32_component >> 24 & 0xFF}.{bit32_component >> 16 & 0xFF}.{bit32_component >> 8 & 0xFF}.{bit32_component >> 0 & 0xFF}"
 
 def subnet_count(ip_cl: str, new_prefix: int) -> int:
-    default_prefix = {"A": 8, "B": 16, "C": 24}.get(ip_cl, 0)
-    if new_prefix < default_prefix:
-        pass
-    # use the next smalest default prefix than do 2 ** (new_prefix - default_prefix) -> how do I get the next smallest prefix?
-    # maybe just use numbers as the prefix indecator and than just convert them into letters? or return both letters and numbers?
-    # or get the index based of off the key and then use the next smallest, tho it wont work on A,
-    # I guess I gatta figure something out for that.
-    return 2 ** (new_prefix - default_prefix) if new_prefix != default_prefix else 1
+    default_prefix = {"A": 8, "B": 16, "C": 24}.get(ip_cl, 24)
+    if new_prefix >= default_prefix:
+        return 2 ** (new_prefix - default_prefix)
+    return 1
 
 def calc_hosts(prefix: int) -> int:
     if prefix >= 31:
         return 0
     return 2 ** (32 - prefix) - 2
 
+
 def generate_subnets(ip: str, prefix: int, first_octet: int, second_octet: int):
     subnet_data = []
     ip_cl = ip_class(first_octet, second_octet)
     ip_type = ip_pub_or_pri(first_octet, second_octet)
     hosts = calc_hosts(prefix)
-    ip_as_int = ip_to_32bit(ip)
+
+    subnet_size = 2 ** (32 - prefix)
+    subnet_mask = (0xFFFFFFFF << (32 - prefix)) & 0xFFFFFFFF
+
+    # Start from the network address of the given IP
+    ip_as_int = ip_to_32bit(ip) & subnet_mask
     count = subnet_count(ip_cl, prefix)
-    print(count)
-    count = 128
-    while count != 0:
-        subnet_mask = (0xFFFFFFFF << (32 - prefix) & 0xFFFFFFFF)
-        network_adr = ip_as_int & subnet_mask
+
+    for _ in range(count):
+        network_adr = ip_as_int
+        broadcast = network_adr + subnet_size - 1
         inverse_mask = subnet_mask ^ 0xFFFFFFFF
-        broadcast = ip_as_int | inverse_mask
+
         if hosts >= 1:
             first_host = fancy_string(network_adr + 1)
-            last_host = fancy_string(network_adr + hosts)
+            last_host = fancy_string(broadcast - 1)
         else:
             first_host = "-"
             last_host = "-"
@@ -78,12 +82,12 @@ def generate_subnets(ip: str, prefix: int, first_octet: int, second_octet: int):
             "Subnet Mask": fancy_string(subnet_mask),
             "Inverse Mask": fancy_string(inverse_mask),
             "Broadcast Address": fancy_string(broadcast),
-            "Sum Subnets": 2 ** prefix,
+            "Sum Subnets": count,
             "Sum Hosts": hosts,
             "First Host": first_host,
             "Last Host": last_host
         }
         subnet_data.append(subnet)
-        ip_as_int = broadcast + 1
-        count -= 1
+        ip_as_int += subnet_size
+
     return subnet_data

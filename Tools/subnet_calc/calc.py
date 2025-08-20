@@ -1,5 +1,5 @@
 import sys
-from Tools.subnet_calc.helper_func import generate_subnets
+from Tools.subnet_calc.helper_func import generate_subnets, ip_to_32bit
 from tabulate import tabulate
 import csv
 import json
@@ -63,6 +63,7 @@ def exec_subcalc(args):
         sys.exit(1) # oder return?
     ip, prefix = create_ip_and_prefix(args)
     subnet_list = subnet_calculator(ip, prefix)
+    subnet_list = sorted(subnet_list, key=lambda x: ip_to_32bit(x["Network Address"]))
 
     if args.export:
         print(f"Data is getting exported as: {args.export}")
