@@ -1,8 +1,6 @@
 from Tools.subnet_calc.helper_func import generate_subnets
 from tabulate import tabulate
 
-# kann ein String sicher als ein Integer convertiert werden? In der eingabe, also in main.py testen!
-
 def subnet_calculator(ip:str, prefix:int):
     ip_list = ip.split(".")
     first_octet = int(ip_list[0])
@@ -12,10 +10,11 @@ def subnet_calculator(ip:str, prefix:int):
                "Sum Hosts", "First Host", "Last Host"]
 
     rows = [subnet.values() for subnet in subnet_list]
-
+    # maybe make the output a bit smaller if possible?
     table = tabulate(rows, headers=headers, tablefmt='grid')
     return table
 
+# I could rebase this but why should I, it works :)
 def exec_subcalc(args):
     ip_address: str = args.subcalc
     if "/" not in ip_address:

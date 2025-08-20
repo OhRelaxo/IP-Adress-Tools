@@ -3,7 +3,7 @@ import argparse
 
 def main():
     parser = argparse.ArgumentParser()
-    # write a better help thing
+    # write a better help thing, I think it should be good now :)
     parser.add_argument("--subcalc", type=str, help="with subcalc (I know horrible name, but that is just how "
                                                     "it goes with programming, I mean what is malloc supposed to mean?)"
                                                     "you can calculate the subnet of a given IP-Address"
