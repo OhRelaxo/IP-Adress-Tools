@@ -62,16 +62,16 @@ def generate_subnets(ip: str, prefix: int, first_octet: int, second_octet: int):
             last_host = "-"
 
         subnet = {
-            "ip-class": ip_cl,
-            "ip-type": ip_type,
-            "network-address": fancy_string(network_adr),
-            "subnet mask": fancy_string(subnet_mask),
-            "inverse mask": fancy_string(inverse_mask),
-            "broadcast-address": fancy_string(broadcast),
-            "sum subnets": 2 ** prefix,
-            "sum hosts": hosts,
-            "first host": first_host,
-            "last host": last_host
+            "IP-Class": ip_cl,
+            "IP-Type": ip_type,
+            "Network Address": fancy_string(network_adr),
+            "Subnet Mask": fancy_string(subnet_mask),
+            "Inverse Mask": fancy_string(inverse_mask),
+            "Broadcast Address": fancy_string(broadcast),
+            "Sum Subnets": 2 ** prefix,
+            "Sum Hosts": hosts,
+            "First Host": first_host,
+            "Last Host": last_host
         }
         subnet_data.append(subnet)
         ip_as_int = broadcast + 1

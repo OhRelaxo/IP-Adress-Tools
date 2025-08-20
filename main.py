@@ -8,7 +8,13 @@ def main():
                                                     "it goes with programming, I mean what is malloc supposed to mean?)"
                                                     "you can calculate the subnet of a given IP-Address"
                                                     "Input: IP-Address with subnet prefix for example: 192.168.0.1/24")
+    parser.add_argument("--export", choices=["csv", "json"], help="exports a subcalc as a csv or json. "
+                                                                  "Input: ...")
+    parser.add_argument("--verbose", action="store_true", help="will also output the subcalc in the commandline, "
+                                                              "can only be used with the --export flag!")
+
     args = parser.parse_args()
+
 
     if args.subcalc:
         exec_subcalc(args)
