@@ -4,46 +4,11 @@ Optional mit tkinter eine GUI machen oder eine website mit html, csv export?
 
 mit uv kompatibel machen
 
-subnet ausrechnen: logik soweit fertig, ausgabe mit tabulate fehlt noch und die generelle Eingabe fehlt auch noch.
+subnet ausrechnen: logik soweit fertig, die generelle Eingabe fehlt noch.
 
 💥 Problem: IP-Klassen wie D und E sind nicht für Subnetting gedacht.
 Daher ist es gut, in deinem Code diese IPs auszuschließen oder mit Warnungen zu versehen.
 
 argparse für die Ein-und ausgabe? verwenden?
 
-Beispiel Code für tabulate:
-
-from tabulate import tabulate
-
-subnet_data = [
-    {
-        'subnet': '192.168.0.0',
-        'mask': '255.255.255.240',
-        'inverse_mask': '0.0.0.15',
-        'size': 14,
-        'host_range': '192.168.0.1 to 192.168.0.14',
-        'broadcast': '192.168.0.15'
-    },
-    {
-        'subnet': '192.168.0.16',
-        'mask': '255.255.255.240',
-        'inverse_mask': '0.0.0.15',
-        'size': 14,
-        'host_range': '192.168.0.17 to 192.168.0.30',
-        'broadcast': '192.168.0.31'
-    }
-]
-
-headers = ['Subnet', 'Mask', 'Inverse Mask', 'Size', 'Host Range', 'Broadcast']
-
-rows = [[
-    entry['subnet'],
-    entry['mask'],
-    entry['inverse_mask'],
-    entry['size'],
-    entry['host_range'],
-    entry['broadcast']
-] for entry in subnet_data]
-
-print(tabulate(rows, headers=headers, tablefmt='grid'))
 
