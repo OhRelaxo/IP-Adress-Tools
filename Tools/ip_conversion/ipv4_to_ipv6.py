@@ -8,8 +8,8 @@ def create_ipv6(args):
     sys.exit(0)
     # add the rest of the ipv6
 
-def convert_ipv4_to_hex(input):
-    ip = split_ipv4(input)
+def convert_ipv4_to_hex(ip_str):
+    ip = split_ipv4(ip_str)
     ip_hex = []
 
     for num in ip:
@@ -20,8 +20,8 @@ def convert_ipv4_to_hex(input):
             ip_hex.append(f"{create_hex_num(remainder)}{create_hex_num(num - remainder * 16)}")
     return ip_hex
 
-def split_ipv4(input):
-    ip = list(map(int, input.split(".")))
+def split_ipv4(ip_str):
+    ip = list(map(int, ip_str.split(".")))
     if len(ip) != 4 or any(o < 0 or o > 255 for o in ip):
         print("invalid IPv4 address")
         sys.exit(1)
