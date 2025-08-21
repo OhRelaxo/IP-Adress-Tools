@@ -2,7 +2,7 @@ Idee:
 Ein cli-tool welches: subnet ausrechnen, ipv4 in ipv6 umwandeln, ipv6 verkürzen und verlängern
 Optional mit tkinter eine GUI machen oder eine website mit html, csv export?
 
-NO CIDR!!!!!!
+NO CIDR!!!!!!😡
 
 Todo:
 mit uv kompatibel machen
@@ -10,8 +10,23 @@ mit uv kompatibel machen
 subnet ausrechnen:
 besseres error handling in subnet_calc
 
-ipv4 in ipv6 umwandlung schreiben
+ipv4 in ipv6 umwandlung schreiben:
+vlt eine csv oder json als input (mit key) und dann alle konvertieren?
 
-ipv6 verkürzen und verlängern
+Damit alte IPv4-Systeme weiterhin im neuen IPv6 Netz funktionieren, wird eine Regelung zur
+„Abwärtskompatibilität" benötigt:
+IPv4-Adresse:   139.80.34(dez) -> 8B.50.22.5(hex)
+kompatible IPv6-Adresse: 0:0:0:0:0:ffff:8B50:2205 oder ::ffff:8B50:2205
+Schritt 1: Jeder Dezimalblock der alten IPv4 Adresse wird in eine Hexadezimalzahl umgewandelt.
+Diese bilden nun die rechten beiden Blöcke der IPv6-Adresse.
+Schritt 2: Vor die umgewandelte IPv4-Adresse wird ein Block mit „fff ergänzt.
+Schritt 3: Die übrigen 5 Blöcke der IPv6 Adresse werden von links mit Nullen aufgefüllt.
+
+ipv6 verkürzen und verlängern:
+
+1. führende Nullen können weggelassen werden
+2. mehrere aufeinanderfolgende 0000 Blöcke (mind. 2 Blöcke)
+können mit :: zusammengefasst werden, dass darf nur einmal angewendet werden!
+
 
 
