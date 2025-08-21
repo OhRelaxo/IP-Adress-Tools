@@ -1,8 +1,11 @@
+import sys
+
+
 def ip_to_32bit(ip: str) -> int:
     octets = list(map(int, ip.split(".")))
-    # basic validation (optional but safe)
     if len(octets) != 4 or any(o < 0 or o > 255 for o in octets):
-        raise ValueError("invalid IPv4 address")
+        print("invalid IPv4 address")
+        sys.exit(1)
     return sum(octet << (8 * (3 - i)) for i, octet in enumerate(octets))
 
 def ip_class(first_octet: int, second_octet: int) -> str:
@@ -23,7 +26,8 @@ def ip_class(first_octet: int, second_octet: int) -> str:
         print("you should not use class D or E for subnetting!")
         return "E"
     else:
-        raise ValueError("the first octet is bigger than 255 :(")
+        print("the first octet is bigger than 255 :(")
+        sys.exit(1)
 
 def ip_pub_or_pri(first_octet: int, second_octet: int) -> str:
     if first_octet == 10:
@@ -59,7 +63,6 @@ def generate_subnets(ip: str, prefix: int, first_octet: int, second_octet: int):
     subnet_size = 2 ** (32 - prefix)
     subnet_mask = (0xFFFFFFFF << (32 - prefix)) & 0xFFFFFFFF
 
-    # Start from the network address of the given IP
     ip_as_int = ip_to_32bit(ip) & subnet_mask
     count = subnet_count(ip_cl, prefix)
 

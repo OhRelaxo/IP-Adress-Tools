@@ -1,4 +1,5 @@
-from Tools.subnet_calc.calc import exec_subcalc
+from Tools.subnet_calc.calc import output_subcalc
+from Tools.ip_conversion.ipv4_to_ipv6 import create_ipv6
 import argparse
 
 def main():
@@ -14,11 +15,16 @@ def main():
                                                                   "currently only subcalc is supported")
     parser.add_argument("--verbose", action="store_true", help="will also output the subcalc table in the commandline, "
                                                               "can only be used with the --export flag!")
+    parser.add_argument("--ip4to6", type=str, help="with ip4to6 you can convert an ipv4 address to an ipv6 address."
+                                                   "Input: --ipv4to6 <IP-Address> (e.g.: 192.168.0.1) without a subnet prefix!")
     args = parser.parse_args()
 
 
     if args.subcalc:
-        exec_subcalc(args)
+        output_subcalc(args)
+
+    if args.ip4to6:
+        create_ipv6(args)
 
 if __name__ == '__main__':
     main()

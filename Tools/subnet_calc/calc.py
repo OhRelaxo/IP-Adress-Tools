@@ -57,7 +57,7 @@ def create_json(subnet_list):
         sys.exit(1)
 
 
-def exec_subcalc(args):
+def output_subcalc(args):
     if args.verbose and not args.export:
         print("error: --verbose can only be used with --export! for help see -h or --help")
         sys.exit(1) # oder return?
@@ -75,4 +75,4 @@ def exec_subcalc(args):
             print(create_table(subnet_list))
     else:
         print(create_table(subnet_list))
-
+    sys.exit(0)
