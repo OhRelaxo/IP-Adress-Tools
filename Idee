@@ -11,46 +11,7 @@ subnet ausrechnen:
 besseres error handling in subnet_calc
 
 ipv4 in ipv6 umwandlung schreiben:
-vlt eine csv oder json als input (mit key) und dann alle konvertieren?
-
-Damit alte IPv4-Systeme weiterhin im neuen IPv6 Netz funktionieren, wird eine Regelung zur
-„Abwärtskompatibilität" benötigt:
-IPv4-Adresse:   139.80.34(dez) -> 8B.50.22.5(hex)
-kompatible IPv6-Adresse: 0:0:0:0:0:ffff:8B50:2205 oder ::ffff:8B50:2205
-Schritt 1: Jeder Dezimalblock der alten IPv4 Adresse wird in eine Hexadezimalzahl umgewandelt.
-Diese bilden nun die rechten beiden Blöcke der IPv6-Adresse.
-Schritt 2: Vor die umgewandelte IPv4-Adresse wird ein Block mit „fff ergänzt.
-Schritt 3: Die übrigen 5 Blöcke der IPv6 Adresse werden von links mit Nullen aufgefüllt.
-
-csv Import:
-
-welche arten von csv können importiert werden?
-den Namen der Datei, diese muss dann auch in dem Verzeichnis des Programms liegen!
-welche Zeile der csv hat die ipv4 adressen?
-vlt nur die Zeile importieren oder danach nach der Zeile filtern
-durch alle IP-Adressen iterieren und die Erstellte ipv6 Adresse in eine Liste speichern,
-diese kann dann mit --verbose auch ausgegeben werden, ansonsten wird die Liste einfach in eine neue csv datei gespeichert.
-
-
-import csv
-
-with open('datei.csv', newline='', encoding='utf-8') as csvfile:
-    reader = csv.DictReader(csvfile)
-    for row in reader:
-        if row['Name'] == 'Ben':
-            print(row)
-            break
-
-oder mit pandas:
-
-import pandas as pd
-
-# Name-Spalte als Index verwenden
-df = pd.read_csv('datei.csv', index_col='Name')
-
-# Zeile mit Label 'Ben' anzeigen
-print(df.loc['Ben'])
-
+vlt noch --shorten als flag und ip4to6
 
 ipv6 verkürzen und verlängern:
 

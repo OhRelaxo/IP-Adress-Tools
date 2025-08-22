@@ -24,7 +24,7 @@ def main():
                                                                   "want to convert to ipv6 address into the first column! Also if you want the"
                                                                   "converted address to get output into the commandline you can use the"
                                                                   "--verbose flag."
-                                                  "how to use: --ip4to6 --input<file_name> the file has to be in the directory of the code!")
+                                                  "how to use: --ip4to6<needs some input :(> --input<file_name> the file has to be in the directory of the code!")
     args = parser.parse_args()
 
 
