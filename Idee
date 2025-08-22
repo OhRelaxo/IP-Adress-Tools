@@ -22,11 +22,23 @@ Diese bilden nun die rechten beiden Blöcke der IPv6-Adresse.
 Schritt 2: Vor die umgewandelte IPv4-Adresse wird ein Block mit „fff ergänzt.
 Schritt 3: Die übrigen 5 Blöcke der IPv6 Adresse werden von links mit Nullen aufgefüllt.
 
+csv Import:
+
+welche arten von csv können importiert werden?
+den Namen der Datei, diese muss dann auch in dem Verzeichnis des Programms liegen!
+welche Zeile der csv hat die ipv4 adressen?
+vlt nur die Zeile importieren oder danach nach der Zeile filtern
+durch alle IP-Adressen iterieren und die Erstellte ipv6 Adresse in eine Liste speichern,
+diese kann dann mit --verbose auch ausgegeben werden, ansonsten wird die Liste einfach in eine neue csv datei gespeichert.
+
 ipv6 verkürzen und verlängern:
 
 1. führende Nullen können weggelassen werden
+split(":")
+if len(block) < 1:
+    continue
+startswith("0")
 2. mehrere aufeinanderfolgende 0000 Blöcke (mind. 2 Blöcke)
 können mit :: zusammengefasst werden, dass darf nur einmal angewendet werden!
-
 
 
