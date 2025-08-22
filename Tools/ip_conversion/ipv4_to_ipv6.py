@@ -10,12 +10,11 @@ def create_ipv6(ip_adr):
         if not ipv4_hex:
             continue
         ipv6 = f"0000:0000:0000:0000:0000:ffff:{"".join(ipv4_hex[:2])}:{"".join(ipv4_hex[2:])}"
-        ipv6_adr.append(ipv6)
+        ipv6_adr.append({"IPv6":ipv6})
     if not ipv6_adr:
         print("fatal error: no IPv6 address was generated!")
         sys.exit(1)
     return ipv6_adr
-    # add the rest of the ipv6
 
 def convert_ipv4_to_hex(ip_str):
     ip = split_ipv4(ip_str)
@@ -59,12 +58,14 @@ def input_csv(args):
     working_dir = os.getcwd()
     file_path = os.path.join(working_dir, args.input)
     try:
-        with open(file_path, newline="", encoding="utf-8") as csvfile:
-            reader = csv.reader(csvfile)
-            for i, row in enumerate(reader):
-                if i == 0:
-                    ip_adr.append(row)
-                continue
+        with open(file_path, mode="r", newline="", encoding="utf-8") as csvfile:
+            sniffer = csv.Sniffer()
+            dialect = sniffer.sniff(csvfile.read(1024))
+            csvfile.seek(0)
+            reader = csv.reader(csvfile, dialect)
+            next(reader)
+            for row in reader:
+                ip_adr.append(row[0])
     except Exception as e:
         print(f"error: failed to read csv file: {e}")
         sys.exit(1)
@@ -74,10 +75,10 @@ def input_csv(args):
 def export_csv(ipv6_adr):
     try:
         with open("ip4to6.csv", mode="w", newline="", encoding="utf-8") as csvfile:
-            fieldnames = "IPv6"
+            fieldnames = ["IPv6"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
-            writer.writerow(ipv6_adr)
+            writer.writerows(ipv6_adr)
     except Exception as e:
         print(f"failed to create the csv, error: {e}")
         sys.exit(1)
@@ -92,10 +93,10 @@ def output_ip4to6(args):
 
     if args.input:
         print("converting...")
-        ipv6_adr = create_ipv6(input_csv(args))
-        export_csv(ipv6_adr)
+        ipv6_list = create_ipv6(input_csv(args))
+        export_csv(ipv6_list)
         if args.verbose:
-            for ipv6 in ipv6_adr:
+            for ipv6 in ipv6_list:
                 print(ipv6)
 
     else:

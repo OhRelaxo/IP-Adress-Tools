@@ -21,7 +21,7 @@ def main():
     parser.add_argument("--input", type=str, help="is used to read from a csv file, for the ip4to6 conversion "
                                                                   "and it will also write the output into a csv file, "
                                                                   "note: it uses the first row, so u need to put the ipv4 addresses that you "
-                                                                  "want to convert to ipv6 address into the first row! Also if you want the"
+                                                                  "want to convert to ipv6 address into the first column! Also if you want the"
                                                                   "converted address to get output into the commandline you can use the"
                                                                   "--verbose flag."
                                                   "how to use: --ip4to6 --input<file_name> the file has to be in the directory of the code!")

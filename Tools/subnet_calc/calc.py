@@ -71,7 +71,7 @@ def output_subcalc(args):
     if args.export:
         print(f"Data is getting exported as: {args.export}")
         if args.export == "csv":
-            create_csv(subnet_list)# nur die csv erstellen
+            create_csv(subnet_list)
         if args.export == "json":
             create_json(subnet_list)
         if args.verbose:
