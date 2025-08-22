@@ -58,8 +58,11 @@ def create_json(subnet_list):
 
 
 def output_subcalc(args):
+    if args.input:
+        print("error: --input is not supported by --subcalc! for help see -h or --hel")
+        sys.exit(1)
     if args.verbose and not args.export:
-        print("error: --verbose can only be used with --export! for help see -h or --help")
+        print("error: --verbose can only be used with --export or --input! for help see -h or --help")
         sys.exit(1) # oder return?
     ip, prefix = create_ip_and_prefix(args)
     subnet_list = subnet_calculator(ip, prefix)

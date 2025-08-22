@@ -31,6 +31,27 @@ vlt nur die Zeile importieren oder danach nach der Zeile filtern
 durch alle IP-Adressen iterieren und die Erstellte ipv6 Adresse in eine Liste speichern,
 diese kann dann mit --verbose auch ausgegeben werden, ansonsten wird die Liste einfach in eine neue csv datei gespeichert.
 
+
+import csv
+
+with open('datei.csv', newline='', encoding='utf-8') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+        if row['Name'] == 'Ben':
+            print(row)
+            break
+
+oder mit pandas:
+
+import pandas as pd
+
+# Name-Spalte als Index verwenden
+df = pd.read_csv('datei.csv', index_col='Name')
+
+# Zeile mit Label 'Ben' anzeigen
+print(df.loc['Ben'])
+
+
 ipv6 verkürzen und verlängern:
 
 1. führende Nullen können weggelassen werden
