@@ -25,6 +25,7 @@ def main():
                                                                   "converted address to get output into the commandline you can use the"
                                                                   "--verbose flag."
                                                   "how to use: --ip4to6<needs some input :(> --input<file_name> the file has to be in the directory of the code!")
+    parser.add_argument("--long", action="store_true", help="toggle if the ipv6 address is not shorten")
     args = parser.parse_args()
 
 

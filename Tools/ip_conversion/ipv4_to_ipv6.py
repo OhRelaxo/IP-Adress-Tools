@@ -3,18 +3,31 @@ import os
 import csv
 # 192.168.0.1: output: 0000:0000:0000:0000:0000:ffff:c0a8:0001 -> c0a8 == 192.168, 0001 == 0.1
 
-def create_ipv6(ip_adr):
+def create_ipv6(ip_adr, toggle):
     ipv6_adr = []
     for ip in ip_adr:
         ipv4_hex = convert_ipv4_to_hex(ip)
         if not ipv4_hex:
             continue
-        ipv6 = f"0000:0000:0000:0000:0000:ffff:{"".join(ipv4_hex[:2])}:{"".join(ipv4_hex[2:])}"
+        if toggle:
+            ipv6 = f"0000:0000:0000:0000:0000:ffff:{"".join(ipv4_hex[:2])}:{"".join(ipv4_hex[2:])}"
+        else:
+            ipv4_joined = shorten(ipv4_hex)
+            ipv6 = f"::ffff:{ipv4_joined[0]}:{ipv4_joined[1]}"
         ipv6_adr.append({"IPv6":ipv6})
     if not ipv6_adr:
         print("fatal error: no IPv6 address was generated!")
         sys.exit(1)
     return ipv6_adr
+
+def shorten(ipv4_hex):
+    joined = ["".join(ipv4_hex[:2]), "".join(ipv4_hex[2:])]
+    for i in range(0, len(joined)):
+        ipv6 = joined[i]
+        if ipv6.startswith("0") and len(ipv6) > 1:
+            ipv6 = ipv6.lstrip("0")
+            joined[i] = ipv6
+    return joined
 
 def convert_ipv4_to_hex(ip_str):
     ip = split_ipv4(ip_str)
@@ -93,7 +106,7 @@ def output_ip4to6(args):
 
     if args.input:
         print("converting...")
-        ipv6_list = create_ipv6(input_csv(args))
+        ipv6_list = create_ipv6(input_csv(args), args.long)
         export_csv(ipv6_list)
         if args.verbose:
             for ipv6 in ipv6_list:
@@ -101,4 +114,4 @@ def output_ip4to6(args):
 
     else:
         ip_adr = [args.ip4to6]
-        print(create_ipv6(ip_adr)[0])
+        print(create_ipv6(ip_adr, args.long)[0],)

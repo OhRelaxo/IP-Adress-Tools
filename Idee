@@ -5,7 +5,7 @@ Optional mit tkinter eine GUI machen oder eine website mit html, csv export?
 NO CIDR!!!!!!😡
 
 Todo:
-mit uv kompatibel machen
+mit uv kompatibel machen,
 
 subnet ausrechnen:
 besseres error handling in subnet_calc
