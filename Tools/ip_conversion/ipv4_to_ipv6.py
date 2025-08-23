@@ -1,7 +1,5 @@
 import sys
-import os
-import csv
-# 192.168.0.1: output: 0000:0000:0000:0000:0000:ffff:c0a8:0001 -> c0a8 == 192.168, 0001 == 0.1
+from Tools.input_output import input_csv, export_csv
 
 def create_ipv6(ip_adr, toggle):
     ipv6_adr = []
@@ -66,36 +64,6 @@ def create_hex_num(num):
         case _:
             return num
 
-def input_csv(args):
-    ip_adr = []
-    working_dir = os.getcwd()
-    file_path = os.path.join(working_dir, args.input)
-    try:
-        with open(file_path, mode="r", newline="", encoding="utf-8") as csvfile:
-            sniffer = csv.Sniffer()
-            dialect = sniffer.sniff(csvfile.read(1024))
-            csvfile.seek(0)
-            reader = csv.reader(csvfile, dialect)
-            next(reader)
-            for row in reader:
-                ip_adr.append(row[0])
-    except Exception as e:
-        print(f"error: failed to read csv file: {e}")
-        sys.exit(1)
-
-    return ip_adr
-
-def export_csv(ipv6_adr):
-    try:
-        with open("ip4to6.csv", mode="w", newline="", encoding="utf-8") as csvfile:
-            fieldnames = ["IPv6"]
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writeheader()
-            writer.writerows(ipv6_adr)
-    except Exception as e:
-        print(f"failed to create the csv, error: {e}")
-        sys.exit(1)
-
 def output_ip4to6(args):
     if args.export:
         print("error: --export is not support with ip4to6 for help see -h or --hel")
@@ -107,11 +75,13 @@ def output_ip4to6(args):
     if args.input:
         print("converting...")
         ipv6_list = create_ipv6(input_csv(args), args.long)
-        export_csv(ipv6_list)
+        export_csv(ipv6_list, "ip4to6.csv", ["IPv6"])
         if args.verbose:
+            # make this look better!
             for ipv6 in ipv6_list:
                 print(ipv6)
 
     else:
         ip_adr = [args.ip4to6]
-        print(create_ipv6(ip_adr, args.long)[0],)
+        # make this look better!
+        print(create_ipv6(ip_adr, args.long)[0])
