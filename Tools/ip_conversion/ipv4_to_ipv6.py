@@ -24,6 +24,8 @@ def shorten(ipv4_hex):
         ipv6 = joined[i]
         if ipv6.startswith("0") and len(ipv6) > 1:
             ipv6 = ipv6.lstrip("0")
+            if not ipv6:
+                ipv6 = "0"
             joined[i] = ipv6
     return joined
 

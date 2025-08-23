@@ -17,6 +17,8 @@ ipv6 verkürzen und verlängern:
 
 0000:0000:0000:0000:0000:ffff:c0a8:0000
 
+0000:0000:0000:ffff:0000:0000:c0a8:0000
+
 1. führende Nullen können weggelassen werden
 split(":")
 if len(block) < 1:
