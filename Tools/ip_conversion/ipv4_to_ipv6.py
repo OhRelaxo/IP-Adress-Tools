@@ -1,5 +1,5 @@
 import sys
-from Tools.input_output import input_csv, export_csv
+from Tools.input_export import input_csv, export_csv
 
 def create_ipv6(ip_adr, toggle):
     ipv6_adr = []
@@ -68,10 +68,10 @@ def create_hex_num(num):
 
 def output_ip4to6(args):
     if args.export:
-        print("error: --export is not support with ip4to6 for help see -h or --hel")
+        print("error: --export is not support with ip4to6 for help see -h or --help")
         sys.exit(1)
     if args.verbose and not args.input:
-        print("error: you can only use verbose with the --export or the --input flag! for help see -h or --hel")
+        print("error: you can only use verbose with the --export or the --input flag! for help see -h or --help")
         sys.exit(1)
 
     if args.input:
