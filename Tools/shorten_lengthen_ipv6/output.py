@@ -19,11 +19,11 @@ def output_shorten_ipv6(args):
         if args.verbose:
             # make this look better!
             for ipv6 in ipv6_list:
-                print(ipv6)
-        else:
-            ip_adr = [args.shortenipv6]
-            # make this look better!
-            print(create_shorten_ipv6(ip_adr)[0])
+                print(ipv6["IPv6"])
+    else:
+        ip_adr = [args.shortenipv6]
+        # make this look better!
+        print(create_shorten_ipv6(ip_adr))
 
 
 def output_lenghten_ipv6(args):

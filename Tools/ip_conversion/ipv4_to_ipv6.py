@@ -81,7 +81,7 @@ def output_ip4to6(args):
         if args.verbose:
             # make this look better!
             for ipv6 in ipv6_list:
-                print(ipv6)
+                print(ipv6["IPv6"])
 
     else:
         ip_adr = [args.ip4to6]
