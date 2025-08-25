@@ -17,13 +17,17 @@ def output_shorten_ipv6(args):
         ipv6_list = create_shorten_ipv6(input_csv(args))
         export_csv(ipv6_list, "shortenipv6.csv", ["IPv6"])
         if args.verbose:
-            # make this look better!
             for ipv6 in ipv6_list:
                 print(ipv6["IPv6"])
     else:
         ip_adr = [args.shortenipv6]
-        # make this look better!
-        print(create_shorten_ipv6(ip_adr))
+        shorten_ipv6 = create_shorten_ipv6(ip_adr)
+        if shorten_ipv6:
+            ipv6 = shorten_ipv6[0]
+            print(ipv6["IPv6"])
+        else:
+            print("error, while shortening a ipv6 address")
+            sys.exit(1)
 
 
 def output_lenghten_ipv6(args):
