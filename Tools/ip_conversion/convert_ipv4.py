@@ -66,24 +66,24 @@ def create_hex_num(num):
         case _:
             return num
 
-def output_ip4to6(args):
-    if args.export:
-        print("error: --export is not support with ip4to6 for help see -h or --help")
+def output_convert_ipv4(args):
+    if args.output_format:
+        print("error: --output-format is not support with ip4to6 for help see -h or --help")
         sys.exit(1)
-    if args.verbose and not args.input:
-        print("error: you can only use verbose with the --export or the --input flag! for help see -h or --help")
+    if args.verbose and not args.input_file:
+        print("error: you can only use verbose with the output-format or the --input-file flag! for help see -h or --help")
         sys.exit(1)
 
-    if args.input:
+    if args.input_file:
         print("converting...")
-        ipv6_list = create_ipv6(input_csv(args), args.long)
-        export_csv(ipv6_list, "ip4to6.csv", ["IPv6"])
+        ipv6_list = create_ipv6(input_csv(args), args.full_ipv6)
+        export_csv(ipv6_list, "convert_ipv4.csv", ["IPv6"])
         if args.verbose:
             # make this look better!
             for ipv6 in ipv6_list:
                 print(ipv6["IPv6"])
 
     else:
-        ip_adr = [args.ip4to6]
-        # make this look better!
-        print(create_ipv6(ip_adr, args.long)[0])
+        ip_adr = [args.convert_ipv4]
+        ipv6 = create_ipv6(ip_adr, args.full_ipv6)[0]
+        print(ipv6["IPv6"])

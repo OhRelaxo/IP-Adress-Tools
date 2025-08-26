@@ -11,7 +11,7 @@ def subnet_calculator(ip:str, prefix:int):
     return subnet_list
 
 def create_ip_and_prefix(args):
-    ip_address: str = args.subcalc
+    ip_address: str = args.subnet
     if "/" not in ip_address:
         print("please use a / to indicate the prefix, for help see -h or --help")
         sys.exit(1)
@@ -36,22 +36,22 @@ def create_table(subnet_list):
     table = tabulate(rows, headers=headers, tablefmt='grid')
     return table
 
-def output_subcalc(args):
-    if args.input:
-        print("error: --input is not supported by --subcalc! for help see -h or --hel")
+def output_subnet(args):
+    if args.input_file:
+        print("error: --input-file is not supported by --subnet! for help see -h or --help")
         sys.exit(1)
-    if args.verbose and not args.export:
-        print("error: --verbose can only be used with --export or --input! for help see -h or --help")
-        sys.exit(1) # oder return?
+    if args.verbose and not args.output_format:
+        print("error: --verbose can only be used with --output-format or --input-file! for help see -h or --help")
+        sys.exit(1)
     ip, prefix = create_ip_and_prefix(args)
     subnet_list = subnet_calculator(ip, prefix)
     subnet_list = sorted(subnet_list, key=lambda x: ip_to_32bit(x["Network Address"]))
 
-    if args.export:
-        print(f"Data is getting exported as: {args.export}")
-        if args.export == "csv":
+    if args.output_format:
+        print(f"Data is getting exported as: {args.output_format}")
+        if args.output_format == "csv":
             export_csv(subnet_list, "subnet.csv", list(subnet_list[0].keys()))
-        if args.export == "json":
+        if args.output_format == "json":
             export_json(subnet_list, "subnet.json")
         if args.verbose:
             print(create_table(subnet_list))

@@ -24,7 +24,7 @@ def export_json(data, file_name):
 def input_csv(args):
     ip_adr = []
     working_dir = os.getcwd()
-    file_path = os.path.join(working_dir, args.input)
+    file_path = os.path.join(working_dir, args.input_file)
     try:
         with open(file_path, mode="r", newline="", encoding="utf-8") as csvfile:
             sniffer = csv.Sniffer()

@@ -5,26 +5,6 @@ Optional mit tkinter eine GUI machen oder eine website mit html, csv export?
 NO CIDR!!!!!!😡
 
 Todo:
-mit uv kompatibel machen,
-
-subnet ausrechnen:
-besseres error handling in subnet_calc
-
-ipv4 in ipv6 umwandlung schreiben:
-vlt noch --shorten als flag und ip4to6
-
-ipv6 verkürzen und verlängern:
-
-0000:0000:0000:0000:0000:ffff:c0a8:0000
-
-0000:0000:0000:ffff:0000:0000:c0a8:0000
-
-1. führende Nullen können weggelassen werden
-split(":")
-if len(block) < 1:
-    continue
-startswith("0")
-2. mehrere aufeinanderfolgende 0000 Blöcke (mind. 2 Blöcke)
-können mit :: zusammengefasst werden, dass darf nur einmal angewendet werden!
+Ich muss wahrscheinlich etwas damit machen: https://docs.python.org/3.13/library/argparse.html#parents
 
 
