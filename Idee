@@ -5,6 +5,27 @@ Optional mit tkinter eine GUI machen oder eine website mit html, csv export?
 NO CIDR!!!!!!😡
 
 Todo:
-Ich muss wahrscheinlich etwas damit machen: https://docs.python.org/3.13/library/argparse.html#parents
+laut chatGPT könnte ich auch das hier machen:
+🔧 Optional: Noch strukturierter mit echten Subkommandos?
+
+Falls du irgendwann richtig getrennte Befehle wie bei git oder docker willst, kannst du mit add_subparsers() arbeiten:
+
+parser = argparse.ArgumentParser(prog="IP-Address-Tools")
+subparsers = parser.add_subparsers(dest="command")
+
+# Subparser für "subnet"
+subnet_parser = subparsers.add_parser("subnet")
+subnet_parser.add_argument("-s", "--subnet", ...)
+
+# Subparser für "convert"
+convert_parser = subparsers.add_parser("convert")
+convert_parser.add_argument("-c", "--convert-ipv4", ...)
 
 
+Dann nutzt man das CLI so:
+
+python tool.py subnet -s 192.168.0.1/24
+python tool.py convert -c 192.168.0.1
+
+
+Aber: Das ist nicht nötig, wenn du mit deiner aktuellen Lösung zufrieden bist. Sie ist stabil, klar und sehr gut organisiert.
