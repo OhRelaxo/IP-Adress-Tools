@@ -29,3 +29,5 @@ python tool.py convert -c 192.168.0.1
 
 
 Aber: Das ist nicht nötig, wenn du mit deiner aktuellen Lösung zufrieden bist. Sie ist stabil, klar und sehr gut organisiert.
+
+man könnte auch noch https://docs.python.org/3.13/library/argparse.html#formatter-class verwenden!
